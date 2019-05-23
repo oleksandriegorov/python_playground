@@ -14,7 +14,9 @@ class measuretime():
     print(time.time() - self.starttime)
 
 if __name__ == '__main__':
-  with measuretime() as m1:
-    with measuretime() as m2:
+  with measuretime():
+    with measuretime():
       time.sleep(2)
+      with measuretime():
+        time.sleep(1)
     time.sleep(3)

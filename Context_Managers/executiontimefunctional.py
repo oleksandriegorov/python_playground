@@ -12,8 +12,8 @@ def spenttime():
     print(time.time()-starttime)
 
 if __name__ == '__main__':
-  with spenttime() as s1:
+  with spenttime():
     time.sleep(2)
-    with spenttime() as s2:
+    with spenttime():
       time.sleep(1)
     time.sleep(1)
