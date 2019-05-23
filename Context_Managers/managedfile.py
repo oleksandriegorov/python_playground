@@ -12,6 +12,7 @@ class ManagedFile:
     if self.file:
       self.file.close()
 
-if __name__ == __main__:
-  print("Hello")
+if __name__ == '__main__':
+  with ManagedFile('/Users/oleksandriegorov/PycharmProjects/playground/Context_Managers/dummyfile') as outputfile:
+    outputfile.write('This is a test')
 
