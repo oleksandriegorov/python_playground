@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+
+# A building has 100 floors. One of the floors is the highest floor an egg can be dropped from without breaking.
+import unittest
+import cmath
+import math
+
+
+def max_num_drops(n_floors: int):
+  # First egg is used to leap through multiple floors
+  # Second egg - to loop from last successful leap to last unsuccessful
+  # In order to make the same amount of leaps with no regard if max_num_drops is on top or bottom 2 conditions apply:
+  # - decrease a number of leaps of 2-nd egg with increased number of leaps made by 1-st egg
+  # - skip as few floors as possible
+  # General solution seems to look like:
+  # n + (n-1) + (n-2) + ... 1 = 100. This is called triangular series and compacts as (n^2 + n)/2 = 100
+  # which is (n^2 + n) - 200 = 0
+  # Solution to it is to resolve quadratic equation:
+  # https: // www.programiz.com / python - programming / examples / quadratic - roots
+  # https://www.khanacademy.org/math/algebra/x2f8bb11595b61c86:quadratic-functions-equations/x2f8bb11595b61c86:quadratic-formula-a1/a/discriminant-review
+  quadratic_coeff = 1
+  lineary_coeff = 1
+  constant_coeff = - 2*n_floors
+  discriminant = lineary_coeff**2 - 4*quadratic_coeff*constant_coeff
+  if discriminant > 0:
+    x1 = ((-lineary_coeff - cmath.sqrt(discriminant))/(2*quadratic_coeff)).real
+    x2 = ((-lineary_coeff + cmath.sqrt(discriminant)) / (2 * quadratic_coeff)).real
+    return math.ceil(max(x1,x2))
+  elif discriminant == 0:
+    return ((-lineary_coeff )/(2*quadratic_coeff)).real
+  else:
+    return -1
+
+#print(max_num_drops(876))
+
+
+class Test(unittest.TestCase):
+  def test_single_floor(self):
+    actual = max_num_drops(1)
+    expected = 1
+    self.assertEqual(actual,expected)
+
+  def test_444_floor(self):
+    actual = max_num_drops(444)
+    expected = 30
+    self.assertEqual(actual,expected)
+
+  def test_250_floor(self):
+    actual = max_num_drops(250)
+    expected = 22
+    self.assertEqual(actual,expected)
+
+unittest.main(verbosity=2)
